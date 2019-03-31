@@ -1,20 +1,25 @@
 import React, {FunctionComponent} from 'react';
-import {ControlPanel, ControlPanelType} from "../ControlPanel/ControlPanel";
-import {Control} from "../../shared/App/App";
-import {Button} from "../Button/Button";
+import {OptionSchema, QuestionType} from '../../../utils/ws';
+import {ControlPanel} from '../ControlPanel/ControlPanel';
+import './question.scss';
 
 export interface QuestionProps {
+    id: number;
     title: string;
-    type: ControlPanelType;
-    controls: Control[];
+    type: QuestionType;
+    options: OptionSchema[];
 }
 
 export const Question: FunctionComponent<QuestionProps> =
-    function Question({title, type, controls}: QuestionProps) {
+    function Question({title, id, type, options}: QuestionProps) {
         return (
-            <div>
+            <div className="question">
                 <h3>{title}</h3>
-                <ControlPanel type={type} controls={controls} />
+                <ControlPanel
+                    id={id}
+                    type={type}
+                    controls={options}
+                />
             </div>
         );
     };

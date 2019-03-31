@@ -1,10 +1,16 @@
 .button {
-  opacity: 0.6;
+  opacity: 1;
   text-align: center;
-  background-color: #9ac77c;
+  background-color: #8ed6ff;
   flex-basis: 50%;
+  border: none;
+  border-radius: 4px;
 
-  &_selected {
-    opacity: 1;
+  &_light {
+    opacity: .4;
+  }
+
+  &_disabled {
+
   }
 }

@@ -1,33 +1,48 @@
 import * as React from 'react';
-import {ControlPanelType} from "../../mobile/ControlPanel/ControlPanel";
-import {Question} from "../../mobile/Question/Question";
+import {onClose, onMessage, QuestionSchema} from '../../../utils/ws';
+import {FinishPanel} from '../../mobile/FinishPanel/FinishPanel';
+import {Question} from '../../mobile/Question/Question';
 
 export interface AppProps {
 
 }
 
-export interface Control {
-    title: string;
-    id: string;
-}
+export const App: React.FC<AppProps> = (props: AppProps) => {
 
-let controls: Control[] = Array.from({length: 5}).map((item, index) => ({
-    title: `control: ${index}`,
-    id: `id${index}`,
-}));
+    let [question, setQuestion] = React.useState<QuestionSchema | undefined>(undefined);
 
-let question = {
-    title: 'Is it the real question?',
-    type: ControlPanelType.MULTIPLE,
-    controls,
-};
+    let [isFinished, setFinished] = React.useState<boolean>(false);
 
-export class App extends React.Component<AppProps> {
+    React.useEffect(() => {
+        onMessage((question: QuestionSchema) => {
+            setQuestion(question);
+            console.log(question);
+        });
 
-    render() {
-        return (
-            <Question {...question} />
-        );
+        onClose(() => {
+            setFinished(true);
+        });
+    }, []);
+
+    if (isFinished) {
+        return <FinishPanel />;
     }
 
-}
+    return (
+        <div className="main-wrapper">
+            {
+                question
+                    ? (
+                        <Question
+                            id={question.questionId}
+                            title={question.title}
+                            type={question.type}
+                            options={question.options}
+                        />
+                    )
+                    : 'Wait, please...'
+            }
+        </div>
+    );
+
+};
