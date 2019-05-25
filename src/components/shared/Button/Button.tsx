@@ -13,15 +13,14 @@ export interface ButtonProps {
 }
 
 export const Button: React.FunctionComponent<ButtonProps> =
-    function Button({children, onClick, light, main, disabled}: ButtonProps) {
-        let className = classnames('button', {
-            'button_light': light,
-            'button_disabled': disabled,
-            'button_main': main,
-        });
+    function Button({className, children, onClick, light, main, disabled}: ButtonProps) {
         return (
             <button
-                className={className}
+                className={classnames('button', className, {
+                    'button_light': light,
+                    'button_disabled': disabled,
+                    'button_main': main,
+                })}
                 onClick={onClick}
                 disabled={disabled}
             >

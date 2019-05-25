@@ -1,0 +1,44 @@
+.survey-teaser {
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.2s ease;
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    &_thumb {
+        margin: -10px -10px 0;
+        display: block;
+    }
+
+    &_image {
+        max-width: 100%;
+        max-height: calc(100% - 100px);
+        object-fit: cover;
+    }
+
+    &_link {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+.survey-teaser-wrap {
+    box-sizing: content-box;
+    padding: 20px;
+
+    height: 300px;
+    min-width: 300px;
+    max-width: 400px;
+    flex-grow: 1;
+
+    display: flex;
+}

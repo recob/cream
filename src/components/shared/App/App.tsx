@@ -1,9 +1,11 @@
 import * as React from 'react';
-import {onClose, onMessage, QuestionSchema} from '../../../utils/ws';
+import {navigate, RouteComponentProps} from '@reach/router';
+import {getStorageUser} from '../../../utils/localStorage';
+import {testSocketConnect, QuestionSchema, DoneSchema} from '../../../utils/ws';
 import {FinishPanel} from '../../mobile/FinishPanel/FinishPanel';
 import {Question} from '../../mobile/Question/Question';
 
-export interface AppProps {
+export interface AppProps extends RouteComponentProps {
 
 }
 
@@ -14,18 +16,28 @@ export const App: React.FC<AppProps> = (props: AppProps) => {
     let [isFinished, setFinished] = React.useState<boolean>(false);
 
     React.useEffect(() => {
-        onMessage((question: QuestionSchema) => {
-            setQuestion(question);
-            console.log(question);
+        let savedUser = getStorageUser();
+        if (savedUser) {
+            testSocketConnect.connect(savedUser.id, savedUser.name);
+        } else {
+            navigate('/name');
+        }
+
+        testSocketConnect.onMessage((question: QuestionSchema | DoneSchema) => {
+            if ((question as DoneSchema).done) {
+                setFinished(true);
+            }
+
+            setQuestion(question as QuestionSchema);
         });
 
-        onClose(() => {
+        testSocketConnect.onClose(() => {
             setFinished(true);
         });
     }, []);
 
     if (isFinished) {
-        return <FinishPanel />;
+        return <FinishPanel/>;
     }
 
     return (
@@ -34,7 +46,7 @@ export const App: React.FC<AppProps> = (props: AppProps) => {
                 question
                     ? (
                         <Question
-                            id={question.questionId}
+                            id={question.id}
                             title={question.title}
                             type={question.type}
                             options={question.options}
@@ -44,5 +56,4 @@ export const App: React.FC<AppProps> = (props: AppProps) => {
             }
         </div>
     );
-
 };

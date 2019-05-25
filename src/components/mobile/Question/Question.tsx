@@ -4,7 +4,7 @@ import {ControlPanel} from '../ControlPanel/ControlPanel';
 import './question.scss';
 
 export interface QuestionProps {
-    id: number;
+    id: string;
     title: string;
     type: QuestionType;
     options: OptionSchema[];

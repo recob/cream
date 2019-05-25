@@ -1,7 +1,23 @@
 .control-panel {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(7, 1fr);
-  grid-gap: 10px;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  &__controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 10px;
+    flex-grow: 6;
+
+    &_row {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__submit {
+    margin-top: 14px;
+    flex-basis: 11%;
+  }
 }

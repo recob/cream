@@ -1,6 +1,7 @@
 import React from 'react';
-import {OptionSchema, QuestionType, sendAnswer} from '../../../utils/ws';
-import {Button} from '../Button/Button';
+import classnames from 'classnames';
+import {OptionSchema, QuestionType, testSocketConnect} from '../../../utils/ws';
+import {Button} from '../../shared/Button/Button';
 
 import './control-panel.scss';
 
@@ -9,7 +10,7 @@ export interface SelectedOptions {
 }
 
 export interface ControlPanelProps {
-    id: number;
+    id: string;
     type: QuestionType;
     controls: OptionSchema[];
 }
@@ -32,27 +33,34 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({id, type, controls}: 
         }
     }
 
+    console.log(id);
     return (
         <div className="control-panel">
-            {controls.map((control) => (
-                <Button
-                    key={control.id}
-                    onClick={() => {
-                        setSelectedItems(control.id);
-                    }}
-                    light={!selected[control.id]}
-                >
-                    {control.value}
-                </Button>
-            ))}
-            <Button
-                onClick={() => {
-                    sendAnswer(id, Object.keys(selected)[0]);
-                }}
-                main
+            <div
+                className="control-panel__controls"
+                style={{gridTemplateRows: `repeat(${Math.ceil(controls.length / 2)}, 1fr)`}}
             >
-                Next
-            </Button>
+                {controls.map((control) => (
+                    <Button
+                        key={control.id}
+                        onClick={() => {
+                            setSelectedItems(control.id);
+                        }}
+                        light={!selected[control.id]}
+                    >
+                        {control.value}
+                    </Button>
+                ))}
+            </div>
+                <Button
+                    className="control-panel__submit"
+                    onClick={() => {
+                        testSocketConnect.sendAnswer(id, Object.keys(selected));
+                    }}
+                    main
+                >
+                    Next
+                </Button>
         </div>
     );
 };
