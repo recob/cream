@@ -1,11 +1,10 @@
 import {RouteComponentProps} from '@reach/router';
 import * as React from 'react';
+import {Form, Input, Button} from 'antd';
 import {postSurvey} from '../../../utils/api/postSurvey';
 import {QuestionSchema, QuestionType} from '../../../utils/ws';
 
 import './survey-creator.scss';
-import {Button} from '../../shared/Button/Button';
-import {Input} from '../../shared/Input/Input';
 import {QuestionCreator} from './QuestionCreator/QuestionCreator';
 
 export interface SurveyCreatorProps extends RouteComponentProps {
@@ -48,27 +47,41 @@ export const SurveyCreator: React.FC<SurveyCreatorProps> =
 
         return (
             <div className="survey-creator">
-                <Input
-                    placeholder="Survey Title"
-                    onChange={(e) => {setSurveyTitle(e.target.value); }}
-                    value={surveyTitle}
-                />
-                <Input
-                    placeholder="Survey Thumb"
-                    onChange={(e) => {setSurveyThumb(e.target.value); }}
-                    value={surveyThumb}
-                />
-                <Button onClick={() => {addQuestion(); }}>Add Question</Button>
-                {questions.map((question) => (
-                    <QuestionCreator
-                        key={question.id}
-                        question={question}
-                        onUpdate={updateQuestion}
-                        onRemove={removeQuestion}
-                    />
-                ))}
+                <Form layout="inline" onSubmit={createSurvey}>
+                    <Form.Item>
+                        <Input
+                            placeholder="Survey Title"
+                            onChange={(e) => {
+                                setSurveyTitle(e.target.value);
+                            }}
+                            value={surveyTitle}
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Input
+                            placeholder="Survey Thumb Link"
+                            onChange={(e) => {
+                                setSurveyThumb(e.target.value);
+                            }}
+                            value={surveyThumb}
+                        />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button onClick={() => {
+                            addQuestion();
+                        }}>Add Question</Button>
+                    </Form.Item>
+                    {questions.map((question) => (
+                        <QuestionCreator
+                            key={question.id}
+                            question={question}
+                            onUpdate={updateQuestion}
+                            onRemove={removeQuestion}
+                        />
+                    ))}
 
-                <Button onClick={createSurvey}>Create Survey</Button>
+                    <Button onClick={createSurvey}>Create Survey</Button>
+                </Form>
             </div>
         );
     };

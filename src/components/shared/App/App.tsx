@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {navigate, RouteComponentProps} from '@reach/router';
-import {getStorageUser} from '../../../utils/localStorage';
+import {clearLocalstorage, getHostData, getStorageUser, setHostData} from '../../../utils/localStorage';
 import {testSocketConnect, QuestionSchema, DoneSchema} from '../../../utils/ws';
 import {FinishPanel} from '../../mobile/FinishPanel/FinishPanel';
 import {Question} from '../../mobile/Question/Question';
 
 export interface AppProps extends RouteComponentProps {
-
+    host?: string;
 }
 
 export const App: React.FC<AppProps> = (props: AppProps) => {
@@ -16,9 +16,23 @@ export const App: React.FC<AppProps> = (props: AppProps) => {
     let [isFinished, setFinished] = React.useState<boolean>(false);
 
     React.useEffect(() => {
+        let {host} = props;
+        let currentHost = getHostData();
+
+        if (host && host !== currentHost) {
+            clearLocalstorage();
+            currentHost = host;
+            setHostData(host);
+        }
+
         let savedUser = getStorageUser();
         if (savedUser) {
-            testSocketConnect.connect(savedUser.id, savedUser.name);
+            if (!currentHost) {
+                clearLocalstorage();
+
+                return;
+            }
+            testSocketConnect.connect(currentHost, savedUser.id, savedUser.name);
         } else {
             navigate('/name');
         }

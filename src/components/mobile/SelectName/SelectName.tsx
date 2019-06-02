@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {RouteComponentProps, navigate} from '@reach/router';
 import {fetchUser} from '../../../utils/api/fetchUser';
-import {getStorageUser} from '../../../utils/localStorage';
+import {getHostData, getStorageUser} from '../../../utils/localStorage';
 import {Button} from '../../shared/Button/Button';
 import {Input} from '../../shared/Input/Input';
 
@@ -13,24 +13,30 @@ export interface SelectNameProps extends RouteComponentProps {
 
 export const SelectName: React.FC<SelectNameProps> =
     function SelectName({}: SelectNameProps) {
-        let savedUser = getStorageUser();
+        React.useEffect(() => {
+            let savedUser = getStorageUser();
 
-        if (savedUser) {
-            navigate('/');
-        }
+            if (savedUser) {
+                navigate('/');
+            }
+        }, []);
 
         let [name, setName] = React.useState<string>('');
 
         async function postName() {
-            try {
-                let user = await fetchUser(name);
-                setName('');
+            let host = getHostData();
 
-                if (user) {
-                    navigate('/');
+            if (host) {
+                try {
+                    let user = await fetchUser(host, name);
+                    setName('');
+
+                    if (user) {
+                        navigate('/');
+                    }
+                } catch (e) {
+                    console.log(e);
                 }
-            } catch (e) {
-                console.log(e);
             }
         }
 

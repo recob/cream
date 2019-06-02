@@ -1,7 +1,6 @@
 import * as React from 'react';
+import {Form, Input, Button, Icon} from 'antd';
 import {OptionSchema, QuestionSchema} from '../../../../utils/ws';
-import {Button} from '../../../shared/Button/Button';
-import {Input} from '../../../shared/Input/Input';
 import {QuestionOption} from './QuestionOption';
 
 import './question-create.scss';
@@ -51,17 +50,35 @@ export const QuestionCreator: React.FC<QuestionCreatorProps> =
 
         return (
             <div className="question-create">
-                <Input
-                    placeholder="Question Title"
-                    value={question.title}
-                    onChange={(event) => {
-                        onUpdate({
-                            ...question,
-                            title: event.target.value,
-                        });
-                    }}
-                />
-                <Button onClick={() => {addOption(); }}>Add Option</Button>
+                <div className="question-create__controls">
+                    <Form.Item>
+                    <Input
+                        placeholder="Question Title"
+                        value={question.title}
+                        onChange={(event) => {
+                            onUpdate({
+                                ...question,
+                                title: event.target.value,
+                            });
+                        }}
+
+                        suffix={
+                            <Icon
+                                onClick={() => {onRemove(question); }}
+                                type="close-circle"
+                            />
+                        }
+                    />
+                    </Form.Item>
+                    <Form.Item>
+
+                    <Button
+                        onClick={() => {addOption(); }}
+                    >
+                        +
+                    </Button>
+                    </Form.Item>
+                </div>
                 {question.options.map((option) => (
                     <QuestionOption
                         key={option.id}
@@ -70,7 +87,6 @@ export const QuestionCreator: React.FC<QuestionCreatorProps> =
                         onRemove={removeOption}
                     />
                 ))}
-                <Button onClick={() => {onRemove(question); }}>Remove Question</Button>
             </div>
         );
     };

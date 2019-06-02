@@ -1,0 +1,23 @@
+.remote {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: ". up ." "left . right" ". down .";
+
+    &__up {
+        grid-area: up;
+    }
+
+    &__left {
+        grid-area: left;
+    }
+
+    &__right {
+        grid-area: right;
+    }
+
+    &__down {
+        grid-area: down;
+    }
+}

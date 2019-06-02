@@ -1,3 +1,5 @@
+@import "../node_modules/antd/dist/antd.css";
+
 * {
     box-sizing: border-box;
 }
@@ -14,4 +16,9 @@ body {
 
 .page {
     min-height: 100vh;
+}
+
+.control-row {
+    display: flex;
+    flex-direction: row;
 }

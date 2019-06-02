@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import './input.scss';
 
 export interface InputProps {
+    wrapClassName?: string;
     className?: string;
     type?: string;
     placeholder?: string;
@@ -14,9 +15,9 @@ export interface InputProps {
 }
 
 export const Input: React.FC<InputProps> =
-    function Input({className, placeholder, value, onChange, autoFocus, type = 'text'}: InputProps) {
+    function Input({wrapClassName, className, placeholder, value, onChange, autoFocus, type = 'text'}: InputProps) {
         return (
-            <div className="input-wrap">
+            <div className={classnames('input-wrap', wrapClassName)}>
                 <input
                     autoFocus={autoFocus}
                     type={type}

@@ -57,9 +57,9 @@ class SocketConnect {
 }
 
 class TestSocketConnect extends SocketConnect {
-    connect(name: string, pass: string): WebSocket {
+    connect(host: string, name: string, pass: string): WebSocket {
         if (!this.socket) {
-            this.socket = new WebSocket(`ws://${name}:${pass}@${process.env.REACT_APP_TEST}/${this.url}`);
+            this.socket = new WebSocket(`ws://${name}:${pass}@${host}/${this.url}`);
         }
 
         return this.socket;
@@ -77,15 +77,44 @@ class TestSocketConnect extends SocketConnect {
 }
 
 class DashboardSocketConnect extends SocketConnect {
-    connect(): WebSocket {
+    connect(host: string, port: number | string): WebSocket {
 
         if (!this.socket) {
-            this.socket = new WebSocket(`ws://${process.env.REACT_APP_TEST}/${this.url}`);
+            this.socket = new WebSocket(`ws://${host}:${port}/${this.url}`);
         }
 
         return this.socket;
     }
 }
 
+export enum RemoteDirection {
+    UP = 'up',
+    DOWN = 'down',
+    RIGHT = 'right',
+    LEFT = 'left',
+}
+
+class RemoteSocketConnect extends SocketConnect {
+    constructor(protected url: string) {
+        super(url);
+    }
+
+    connect(name: string): WebSocket {
+
+        if (!this.socket) {
+            this.socket = new WebSocket(`${this.url}/${name}`);
+        }
+
+        return this.socket;
+    }
+
+    sendAnswer(direction: RemoteDirection) {
+        if (this.socket) {
+            this.socket.send(JSON.stringify({action: direction}));
+        }
+    }
+}
+
 export const testSocketConnect = new TestSocketConnect('stream');
 export const dashboardSocketConnect = new DashboardSocketConnect('dashboard');
+export const remoteSocketConnect = new RemoteSocketConnect('wss://presentation.recob.me/control');

@@ -12,6 +12,12 @@ export function getItem(key: string): any {
     }
 }
 
+export function clearLocalstorage() {
+    if (window.location) {
+        window.localStorage.clear();
+    }
+}
+
 const USER_KEY = 'user';
 
 export function getStorageUser(): Optional<User> {
@@ -24,4 +30,19 @@ export function getStorageUser(): Optional<User> {
 
 export function setStorageUser(user: User) {
     setItem(USER_KEY, JSON.stringify(user));
+}
+
+const START_DATA_KEY = 'start-data';
+
+export function setHostData(host: string) {
+    setItem(START_DATA_KEY, host);
+
+}
+
+export function getHostData(): Optional<string> {
+    try {
+        return getItem(START_DATA_KEY);
+    } catch (error) {
+        console.error(error);
+    }
 }

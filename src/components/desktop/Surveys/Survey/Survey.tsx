@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {Link} from '@reach/router';
-import {postStart} from '../../../../utils/api/postStart';
 import {QuestionSchema} from '../../../../utils/ws';
 
 import './survey.scss';
@@ -20,9 +19,6 @@ export const Survey: React.FC<SurveyProps> =
                     <Link
                         className="survey-teaser_link"
                         to={`/surveys/${id}`}
-                        onClick={(event) => {
-                            postStart();
-                        }}
                     >
                     </Link>
                     {thumbnail && (

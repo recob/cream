@@ -1,4 +1,4 @@
-import {fetchApi} from '../fetchData';
+import {fetchData} from '../fetchData';
 import {setStorageUser} from '../localStorage';
 
 export interface User {
@@ -7,9 +7,9 @@ export interface User {
     username: string;
 }
 
-export async function fetchUser(name: string): Promise<Optional<User>> {
+export async function fetchUser(host: string, name: string): Promise<Optional<User>> {
     try {
-        let user = await fetchApi(`/auth?name=${name}`);
+        let user = await fetchData(host, `/auth?name=${name}`, {useHttp: true});
 
         setStorageUser(user);
 

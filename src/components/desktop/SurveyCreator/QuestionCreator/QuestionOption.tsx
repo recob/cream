@@ -1,7 +1,6 @@
 import * as React from 'react';
+import {Form, Input, Icon} from 'antd';
 import {OptionSchema} from '../../../../utils/ws';
-import {Button} from '../../../shared/Button/Button';
-import {Input} from '../../../shared/Input/Input';
 
 export interface QuestionOptionProps {
     option: OptionSchema;
@@ -13,27 +12,37 @@ export const QuestionOption: React.FC<QuestionOptionProps> =
     function QuestionOption({option, onRemove, onUpdate}: QuestionOptionProps) {
         return (
             <div>
-                <Input
-                    type="checkbox"
-                    checked={option.right}
-                    onChange={(event) => {
-                        onUpdate({
-                            ...option,
-                            right: event.target.checked,
-                        });
-                    }}
-                />
-                <Input
-                    placeholder={`Option Value`}
-                    value={option.value}
-                    onChange={(event) => {
-                        onUpdate({
-                            ...option,
-                            value: event.target.value,
-                        });
-                    }}
-                />
-                <Button onClick={() => {onRemove(option); }}>X</Button>
+                <div className="control-row">
+                    <Input
+                        addonBefore={
+                            <Icon
+                                type={option.right ? 'check-circle' : 'close-circle'}
+                                theme="twoTone"
+                                twoToneColor={option.right ? '#52c41a' : '#eb2f96'}
+                                onClick={() => {
+                                    onUpdate({
+                                        ...option,
+                                        right: !option.right,
+                                    });
+                                }}
+                            />
+                        }
+                        suffix={
+                            <Icon
+                                onClick={() => {onRemove(option); }}
+                                type="close-circle"
+                            />
+                        }
+                        placeholder={`Option Value`}
+                        value={option.value}
+                        onChange={(event) => {
+                            onUpdate({
+                                ...option,
+                                value: event.target.value,
+                            });
+                        }}
+                    />
+                </div>
             </div>
         );
     };

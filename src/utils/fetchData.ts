@@ -2,13 +2,19 @@ interface FetchApiConfig {
     method?: 'GET' | 'POST' | 'PATCH';
     body?: Dict<any>;
     headers?: Dict<any>;
+    useHttp?: boolean
 }
 
-export async function fetchApi(url: string, {method = 'GET', body, headers, ...config}: FetchApiConfig = {}) {
+export async function fetchData(
+    host: string,
+    url: string,
+    {method = 'GET', body, headers, useHttp, ...config}: FetchApiConfig = {},
+) {
+    console.log('eblo');
+    console.log(headers);
     headers = {
         ...headers,
         'Accept': 'application/json',
-        'Access-Control-Allow-Credentials': true,
         'Content-Type': 'application/json',
     };
 
@@ -21,13 +27,17 @@ export async function fetchApi(url: string, {method = 'GET', body, headers, ...c
         ...config,
     };
 
-    let response: Response = await fetch(`http://${process.env.REACT_APP_TEST}${url}`, fetchConfig);
+    let response: Response = await fetch(`${useHttp ? 'http' : 'https'}://${host}${url}`, fetchConfig);
 
     if (response.ok) {
         return response.json();
     }
 
     throw new Error('Something went wrong');
+}
+
+export async function fetchApi(url: string, fetchConfig: FetchApiConfig = {}) {
+    return fetchData(process.env.REACT_APP_HOST as string, url, fetchConfig);
 }
 
 export function postData(url: string, data?: Dict<any>, config?: FetchApiConfig) {
