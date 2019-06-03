@@ -3,6 +3,10 @@
   flex-direction: column;
   flex-grow: 1;
 
+  .done-question & {
+    margin: 8px 0 32px;
+  }
+
   &__controls {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

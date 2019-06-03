@@ -13,11 +13,13 @@ export interface SelectNameProps extends RouteComponentProps {
 
 export const SelectName: React.FC<SelectNameProps> =
     function SelectName({}: SelectNameProps) {
+        let currentHost = getHostData();
+
         React.useEffect(() => {
             let savedUser = getStorageUser();
 
-            if (savedUser) {
-                navigate('/');
+            if (savedUser && currentHost) {
+                navigate(`/${currentHost}`);
             }
         }, []);
 
@@ -32,6 +34,8 @@ export const SelectName: React.FC<SelectNameProps> =
                     setName('');
 
                     if (user) {
+                        navigate(`/${currentHost}`);
+                    } else {
                         navigate('/');
                     }
                 } catch (e) {
@@ -41,13 +45,14 @@ export const SelectName: React.FC<SelectNameProps> =
         }
 
         function onFormSubmit(event: React.FormEvent) {
+            console.log(event);
             event.preventDefault();
 
             postName();
         }
 
         return (
-            <form onSubmit={onFormSubmit} className="select-name-wrap">
+            <form onSubmit={(event1) => event1.preventDefault()} className="select-name-wrap">
                 <Input
                     autoFocus
                     className="select-name-wrap__input"

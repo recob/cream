@@ -9,7 +9,7 @@ export interface User {
 
 export async function fetchUser(host: string, name: string): Promise<Optional<User>> {
     try {
-        let user = await fetchData(host, `/auth?name=${name}`, {useHttp: true});
+        let user = await fetchData(host, `/auth?name=${name}`);
 
         setStorageUser(user);
 

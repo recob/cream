@@ -8,6 +8,7 @@ export interface OptionSchema {
     value: string;
     id: string;
     right: boolean;
+    userAnswer?: boolean;
 }
 
 export interface QuestionSchema {
@@ -59,7 +60,7 @@ class SocketConnect {
 class TestSocketConnect extends SocketConnect {
     connect(host: string, name: string, pass: string): WebSocket {
         if (!this.socket) {
-            this.socket = new WebSocket(`ws://${name}:${pass}@${host}/${this.url}`);
+            this.socket = new WebSocket(`wss://${name}:${pass}@${host}/${this.url}`);
         }
 
         return this.socket;
@@ -80,7 +81,7 @@ class DashboardSocketConnect extends SocketConnect {
     connect(host: string, port: number | string): WebSocket {
 
         if (!this.socket) {
-            this.socket = new WebSocket(`ws://${host}:${port}/${this.url}`);
+            this.socket = new WebSocket(`wss://${host}:${port}/${this.url}`);
         }
 
         return this.socket;

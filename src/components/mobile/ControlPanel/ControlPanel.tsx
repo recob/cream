@@ -12,9 +12,10 @@ export interface ControlPanelProps {
     id: string;
     type: QuestionType;
     controls: OptionSchema[];
+    readOnly?: boolean;
 }
 
-export const ControlPanel: React.FC<ControlPanelProps> = ({id, type, controls}: ControlPanelProps) => {
+export const ControlPanel: React.FC<ControlPanelProps> = ({id, type, controls, readOnly}: ControlPanelProps) => {
     let [selected, setSelected] = React.useState<SelectedOptions>({});
 
     function setSelectedItems(selectedId: string) {
@@ -42,23 +43,34 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({id, type, controls}: 
                     <Button
                         key={control.id}
                         onClick={() => {
-                            setSelectedItems(control.id);
+                            if (!readOnly) {
+                                setSelectedItems(control.id);
+                            }
                         }}
-                        light={!selected[control.id]}
+
+                        light={!readOnly ? !selected[control.id] : control.userAnswer}
+
+                        green={control.right && control.userAnswer}
+
+                        red={control.right || control.userAnswer}
                     >
                         {control.value}
                     </Button>
                 ))}
             </div>
+            {!readOnly &&
                 <Button
                     className="control-panel__submit"
                     onClick={() => {
-                        testSocketConnect.sendAnswer(id, Object.keys(selected));
+                        if (!readOnly) {
+                            testSocketConnect.sendAnswer(id, Object.keys(selected));
+                        }
                     }}
                     main
                 >
                     Next
                 </Button>
+            }
         </div>
     );
 };

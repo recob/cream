@@ -10,8 +10,6 @@ export async function fetchData(
     url: string,
     {method = 'GET', body, headers, useHttp, ...config}: FetchApiConfig = {},
 ) {
-    console.log('eblo');
-    console.log(headers);
     headers = {
         ...headers,
         'Accept': 'application/json',

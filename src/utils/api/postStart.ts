@@ -9,5 +9,5 @@ export interface SurveyStartOptions {
 }
 
 export async function postStart({host, port}: StartOptions): Promise<SurveyStartOptions> {
-    return fetchData(`${host}:${port}`, `/survey/start`, {useHttp: true});
+    return fetchData(`${host}:${port}`, `/survey/start`, {method: 'POST'});
 }
