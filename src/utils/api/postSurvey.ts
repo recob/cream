@@ -60,11 +60,7 @@ export async function postSurvey(title: string, questions: QuestionSchema[], thu
 
         let user = await fetchApi(`/surveys`, {
             method: 'POST',
-            body: {
-                title,
-                thumbnail,
-                questions: preparedQuestion,
-            },
+            body: preparedQuestion,
         });
 
         setStorageUser(user);

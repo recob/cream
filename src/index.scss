@@ -6,6 +6,11 @@
 
 body {
     font-family: sans-serif;
+    padding-left: 68px;
+
+    @media (max-width: 800px) {
+        padding-left: 0;
+    }
 }
 
 .main-wrapper {
@@ -21,4 +26,41 @@ body {
 .control-row {
     display: flex;
     flex-direction: row;
+}
+
+.nav-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    box-shadow: 0 0 3px 0 rgba(0,0,0,.75);
+    display: flex;
+    flex-direction: column;
+    padding: 40px 10px;
+
+    @media (max-width: 800px) {
+        display: none;
+    }
+
+    &__item {
+        padding: 16px;
+        box-shadow: 0 0 5px 0 #8ed6ff;
+        height: 48px;
+        width: 48px;
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        border-radius: 50%;
+        margin: 16px 0;
+        line-height: 48px;
+        justify-content: center;
+    }
+}
+
+.app {
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

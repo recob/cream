@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames';
 import {OptionSchema, QuestionType, testSocketConnect} from '../../../utils/ws';
 import {Button} from '../../shared/Button/Button';
 
@@ -33,7 +32,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({id, type, controls}: 
         }
     }
 
-    console.log(id);
     return (
         <div className="control-panel">
             <div

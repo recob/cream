@@ -25,7 +25,7 @@ export const Remote: React.FC<RemoteProps> =
                         remoteSocketConnect.sendAnswer(RemoteDirection.UP);
                     }}
                 >
-                    UP
+                    ▲
                 </Button>
                 <Button
                     className="remote__down"
@@ -33,7 +33,7 @@ export const Remote: React.FC<RemoteProps> =
                         remoteSocketConnect.sendAnswer(RemoteDirection.DOWN);
                     }}
                 >
-                    DOWN
+                    ▼
                 </Button>
                 <Button
                     className="remote__right"
@@ -41,7 +41,7 @@ export const Remote: React.FC<RemoteProps> =
                         remoteSocketConnect.sendAnswer(RemoteDirection.RIGHT);
                     }}
                 >
-                    RIGHT
+                    ▶
                 </Button>
                 <Button
                     className="remote__left"
@@ -49,7 +49,7 @@ export const Remote: React.FC<RemoteProps> =
                         remoteSocketConnect.sendAnswer(RemoteDirection.LEFT);
                     }}
                 >
-                    LEFT
+                    ◀
                 </Button>
             </div>
         );
