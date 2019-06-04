@@ -15,12 +15,17 @@ body {
 
 .main-wrapper {
     padding: 10px;
-    height: 100vh;
     font-family: sans-serif;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
 }
 
 .page {
-    min-height: 100vh;
+    min-height: 100%;
+    display: inline;
 }
 
 .control-row {

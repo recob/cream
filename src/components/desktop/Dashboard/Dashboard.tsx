@@ -94,6 +94,8 @@ export const Dashboard: React.FC<DashboardProps> =
                 <CircularProgressbar value={progress || 0} text={`${surveyStat.finished}/${surveyStat.connected}`} />
 
                 <Button
+                    size="large"
+                    style={{marginTop: 32}}
                     onClick={() => {postStop(connectData as StartOptions); }}
                 >
                     Stop
